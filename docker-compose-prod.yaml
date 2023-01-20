@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  prod-backend:
+    build: .
+    ports:
+      - '${PORT:-80}:80'
+    volumes:
+      - ./data:/home/gunicorn/k8s-wizard/data/
+      - ./frontend/config:/home/gunicorn/k8s-wizard/frontend/config/
+      - dist:/home/gunicorn/k8s-wizard/frontend/dist
+    environment:
+      BUILD: prod
+      PYTHONUNBUFFERED: 1
+      WORKERS: ${WORKERS:-1}
+      PORT: ${PORT:-80}
+    command: /home/gunicorn/k8s-wizard/start.sh
+
+volumes:
+  dist:

@@ -1,0 +1,62 @@
+- reference: workload-resources.pod-v1.data_objects.Pod.metadata
+  attribute: required
+  action: set scalars
+  value: True
+- reference: workload-resources.pod-v1.data_objects.Pod.spec
+  attribute: required
+  action: set scalar
+  value: True
+- reference: workload-resources.pod-v1.data_objects.Container.imagePullPolicy
+  attribute: default
+  action: drop attribute
+- reference: workload-resources.pod-v1.data_objects.PodSpec.volumes
+  attribute: select_one
+  action: set list
+  value:
+    - persistentVolumeClaim
+    - configMap
+    - secret
+    - downwardAPI
+    - projected
+    - emptyDir
+    - hostPath
+    - awsElasticBlockStore
+    - azureDisk
+    - azureFile
+    - cephfs
+    - cinder
+    - csi
+    - fc
+    - flexVolume
+    - flocker
+    - gcePersistentDisk
+    - glusterfs
+    - iscsi
+    - nfs
+    - photonPersistentDisk
+    - portworxVolume
+    - quobyte
+    - rbd
+    - scaleIO
+    - storageos
+    - vsphereVolume
+    - ephemeral
+    - gitRepo
+- reference: workload-resources.pod-v1.data_objects.paramTolerations.operator
+  attribute: options
+  action: set list
+  value:
+    - Exists
+    - Equal
+- reference: config-and-storage-resources.volume.data_objects.Volume.name
+  attribute: same_as
+  action: set scalar
+  value: workload-resources.pod-v1.data_objects.paramVolumemounts.name
+- reference: workload-resources.pod-v1.data_objects.paramVolumemounts.name
+  attribute: same_as
+  action: set scalar
+  value: config-and-storage-resources.volume.data_objects.Volume.name
+- reference: config-and-storage-resources.volume.data_objects.paramPersistentvolumeclaim.readOnly
+  attribute: default
+  action: set scalar
+  value: False

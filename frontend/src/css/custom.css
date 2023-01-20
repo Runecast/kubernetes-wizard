@@ -1,0 +1,48 @@
+.list-field {
+  margin-left: 5%;
+  width: 95%;
+  display: list-item;
+  list-style-position: outside;
+}
+
+#left-panel, #result-wrapper {
+  overflow-x: hidden !important;
+}
+
+.button-close-icon {
+  font-size: 0.5em;
+  color: black;
+}
+
+.button-close {
+  border-top-left-radius: calc(0.25rem - 1px);
+  border-top-right-radius: calc(0.25rem - 1px);
+  border-bottom-right-radius: calc(0.25rem - 1px);
+}
+
+.btn-secondary:hover, .btn-outline-secondary:hover {
+  color: white;
+}
+
+
+.hljs {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  padding: 1rem;
+  background-color: #fff;
+}
+
+.hljs-attr, .hljs-attribute {
+  color: #162d5e;
+  font-weight: bold;
+}
+
+.hljs-string {
+  color: #e5931c;
+}
+
+.hljs-literal, .hljs-number {
+  color: #5a616c;
+}

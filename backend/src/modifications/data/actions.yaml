@@ -1,0 +1,6 @@
+- set scalar
+- set list
+- append scalar
+- concatenate list
+- drop attribute
+- remove items

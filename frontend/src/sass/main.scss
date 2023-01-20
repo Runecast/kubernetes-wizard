@@ -1,0 +1,33 @@
+// New colors
+$rc-blue: #162d5e;
+$rc-orange: #e5931c;
+
+// Theme colors
+$primary: $rc-blue;
+$secondary: $rc-orange;
+$light: #bbb3a6;
+
+// Buttons
+$input-btn-focus-width: 0.08rem;
+$input-group-addon-bg: #e8eaef;
+
+// Links
+$link-decoration: none;
+
+// Popovers
+$popover-max-width: 552px;
+
+// Utils imports
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+
+// Add new theme colors to color map
+$custom-theme-colors: (
+  'rc-blue': $rc-blue,
+  'rc-orange': $rc-orange,
+  'light-grey': #e8eaef
+);
+$theme-colors: map-merge($theme-colors, $custom-theme-colors);
+
+// Import SCSS
+@import "../../node_modules/bootstrap/scss/bootstrap";

@@ -1,0 +1,73 @@
+{
+    "version": 1,
+    "disable_existing_loggers": true,
+    "formatters": {
+        "verbose": {
+            "format": "{asctime} {levelname} [{process:d} - {thread:d}] {module} - {message}",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+            "style": "{"
+        },
+        "simple": {
+            "format": "{asctime} {levelname} {message}",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+            "style": "{"
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "simple"
+        }
+    },
+    "loggers": {
+        "gunicorn": {
+            "level": "DEBUG",
+            "propagate": false,
+            "handlers": [
+                "console"
+            ]
+        },
+        "gunicorn.error": {
+            "level": "DEBUG",
+            "propagate": false,
+            "handlers": [
+                "console"
+            ]
+        },
+        "gunicorn.access": {
+            "level": "DEBUG",
+            "propagate": false,
+            "handlers": [
+                "console"
+            ]
+        },
+        "uvicorn": {
+            "level": "DEBUG",
+            "propagate": false,
+            "handlers": [
+                "console"
+            ]
+        },
+        "uvicorn.error": {
+            "level": "DEBUG",
+            "propagate": false,
+            "handlers": [
+                "console"
+            ]
+        },
+        "uvicorn.access": {
+            "level": "DEBUG",
+            "propagate": false,
+            "handlers": [
+                "console"
+            ]
+        }
+    },
+    "root": {
+        "handlers": [
+            "console"
+        ],
+        "level": "DEBUG"
+    }
+}

@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  dev-backend:
+    build:
+      context: ./backend/
+      dockerfile: dev.Dockerfile
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./data:/home/gunicorn/k8s-wizard/data/
+      - ./backend:/home/gunicorn/k8s-wizard/backend/
+      - ./frontend:/home/gunicorn/k8s-wizard/frontend/
+    environment:
+      BUILD: dev
+      HOST: 0.0.0.0
+    command: python run_local.py
+
+  dev-frontend:
+    build:
+      context: ./frontend/
+      dockerfile: dev.Dockerfile
+    volumes:
+      - './frontend:/opt/k8s-wizard/frontend/'
+      - '/opt/k8s-wizard/frontend/node_modules'
+    ports:
+      - '7901:8080'
+    command: npm run serve
+    depends_on:
+      - dev-backend
