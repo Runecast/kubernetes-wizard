@@ -1,4 +1,5 @@
 .idea
+__pycache__/
+*.py[cod]
 /backend/logs
 .env
-logs/

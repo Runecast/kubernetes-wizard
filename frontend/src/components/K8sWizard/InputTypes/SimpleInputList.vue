@@ -16,6 +16,7 @@
         data-bs-toggle="popover"
         data-bs-trigger="focus"
         value=""
+        :data-type="parameterData.type"
       />
       <button
         class="input-group-text"

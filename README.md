@@ -25,30 +25,27 @@ This must be the first step after choosing a resource, since this button will be
 
 ## For developers
 
-### Set up
+### Set up for production
 
 The project can be run using Docker with the command (use `sudo` if not in the Docker user group on Linux):
 ```bash
-docker-compose -f ./docker-compose-[profile].yaml up -d
+docker build -ti k8s-wizard .
+docker run -p 80:8000 -ti k8s-wizard
 ```
-where `[profile]` can be:
-- `dev`: the front-end is deployed on port 7901 and the back-end on port 5000.
-- `prod`: the front-end is built, then served by the back-end on port 80.
+The front-end is built, then served by the back-end on port 80 (the port can be changed in the previous command).
 
-To stop the application, run:
-```bash
-docker-compose -f ./docker-compose-[profile].yaml down
-```
-
-By default, there is only 1 worker in production and the port is 80. To change this behavior, create a `.env` file at the root of the project (next to `docker-compose-prod.yaml`) with the following content:
+By default, there is only 1 worker in production. To change this behavior, create a `.env` file at the root of the project (next to `Dockerfile`) with the following content:
 ```env
 WORKERS=[n_workers]
-PORT=[port]
 ```
-with `[n_workers]` and `[port]` integers.
-The port can't be 7901 or 8080 (these values is reserved for development).
+with `[n_workers]` an integer.
+The port can't be 8080 (this value is reserved for development).
 
-If you'd rather use Python and Node.js instead of Docker Compose to run the app locally, the back-end can be started using the script with:
+### Set up for development
+
+For development, you'll need Python 3.10+ and Node.js.
+
+The back-end can be started using the following:
 ```bash
 cd backend
 pip install -r requirements.txt  # Only the first time

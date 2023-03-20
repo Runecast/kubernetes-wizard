@@ -225,7 +225,9 @@ export default {
             })
 
             let parameterValue;
-            if (parameter.value === 'true' || parameter.value === 'false') {
+            if (Object.keys(parameter.dataset).includes('type') && parameter.dataset.type.endsWith('string')) {
+              parameterValue = parameter.value;
+            } else if (parameter.value === 'true' || parameter.value === 'false') {
               parameterValue = (parameter.value === 'true');
             } else if (!isNaN(parameter.value) && !isNaN(parseFloat(parameter.value))) {
               parameterValue = parseFloat(parameter.value);

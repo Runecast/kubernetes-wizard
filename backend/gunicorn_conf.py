@@ -15,7 +15,7 @@ if max_workers_str:
 web_concurrency_str = os.getenv("WEB_CONCURRENCY", None)
 
 host = os.getenv("HOST", "0.0.0.0")
-port = "80"
+port = "8000"
 bind_env = os.getenv("BIND", None)
 use_loglevel = os.getenv("LOG_LEVEL", "info")
 if bind_env:

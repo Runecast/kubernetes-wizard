@@ -14,5 +14,9 @@ fi
 export GUNICORN_CONF=${GUNICORN_CONF:-$DEFAULT_GUNICORN_CONF}
 export WORKER_CLASS=${WORKER_CLASS:-"uvicorn.workers.UvicornH11Worker"}
 
+ls /home/gunicorn/k8s-wizard/backend
+echo "$APP_MODULE"
+echo "$MODULE_NAME"
+echo "$VARIABLE_NAME"
 # Start Gunicorn
 exec gunicorn -k "$WORKER_CLASS" -c "$GUNICORN_CONF" "$APP_MODULE" --workers ${WORKERS:-1}

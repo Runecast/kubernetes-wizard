@@ -1,6 +1,5 @@
 import logging
 from pathlib import Path
-from typing import Union
 
 import yaml
 
@@ -25,7 +24,7 @@ modifications_data = {
 }
 
 
-def validate_modification(reference: str, attribute: str, action: str, value: Union[str, list[Union[str, int]]]) \
+def validate_modification(reference: str, attribute: str, action: str, value: str | list[str | int]) \
         -> bool:
     """
     Check modification consistency.

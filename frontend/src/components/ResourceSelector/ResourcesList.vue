@@ -56,7 +56,7 @@ export default {
     fetchData() {
       let protocol = location.protocol;
       let hostName = location.hostname;
-      let port = (location.port !== '7901' && location.port !== '8080')? (location.port? ':': '')+location.port: ':5000'  // Set port 5000 in dev mode
+      let port = location.port !== '8080'? (location.port? ':': '')+location.port: ':5000'  // Set port 5000 in dev mode
       let apiEndpoint = `${protocol}//${hostName}${port}/api_reference/${store.state.k8sVersion}`;
       axios
       .get(apiEndpoint)

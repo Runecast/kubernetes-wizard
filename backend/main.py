@@ -37,14 +37,17 @@ if 'BUILD' in os.environ and os.environ['BUILD'] == 'prod':
 
 app.include_router(router)
 
+
 @app.get('/favicon.ico', include_in_schema=False)
 async def favicon():
     if FAVICON.exists():
         return FileResponse(FAVICON)
 
+
 @app.get('content')
 async def content():
     return JSONResponse({'content': os.walk(top='')})
+
 
 @app.exception_handler(HTTPException)
 async def custom_http_exception_handler(request, exc):  # noqa
