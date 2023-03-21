@@ -1,12 +1,21 @@
-# K8S Wizard
+# K8s Wizard
 
 ---
 
 This application facilitates the creation of Kubernetes YAML manifests by automatically generating YAML code based on user input provided through a form.
 
+- [Usage](#usage)
+- [For developers](#for-developers)
+  - [Set up for production](#set-up-for-production)
+  - [Set up for development](#set-up-for-development)
+  - [Data modifications](#data-modifications)
+
 ## Usage
 
-In the application, you can choose your Kubernetes version and select a resource.
+In the application, you can choose your Kubernetes version and select a resource. You can easily search for resources by entering (even partial) resource type. 
+
+![Screen 1 - Selecting resources](readme-screen1.png "Selecting resources")
+
 A form is created on the left panel, and the YAML will be generated on the right panel.
 All data objects are collapsed by default but can be expanded to access their parameters.
 
@@ -17,11 +26,15 @@ You no longer need to go back and forth reading the API reference, the form cont
 - Parameter type
 - Required
 
+![Screen 2 - Editing deployment manifest](readme-screen2.png "Editing deployment manifest")
+
 When filling out the form, the YAML is automatically generated.
 When you're done, you can click on the "Copy" button and paste the results in your YAML manifest.
 
 If you already have a working YAML manifest and want to modify it, you can import it in the application using the "Import" button.
 This must be the first step after choosing a resource, as the button will be disabled as soon as a field of the form is filled out (to avoid silently overriding your inputs).
+
+![Screen 3 - Importing manifest](readme-screen3.png "Importing manifest")
 
 ## For developers
 
