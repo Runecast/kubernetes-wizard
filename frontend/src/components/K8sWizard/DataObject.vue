@@ -92,7 +92,9 @@
             :data-bs-parent="`#accordion-${getDisplayIdFromPath(key)}`"
           >
             <div class="accordion-body">
-              <div v-if="parameterDescriptions[key]" v-html="`${parameterDescriptions[key]}<hr>`"></div>
+              <div
+                v-if="parameterDescriptions[key] && parameterDescriptions[key] !== subDescription(subParameterData(subParameterDetails[key]['reference'])['description'])"
+                v-html="`${parameterDescriptions[key]}<hr>`"></div>
               <DataObject
                 v-if="subParameterDetails[key]['reference'] && (!subParameterDetails[key]['select_one'])"
                 :parameter-data="subParameterData(subParameterDetails[key]['reference'])"
