@@ -33,7 +33,7 @@ docker build -t k8s-wizard .
 docker run -p 80:8000 -ti k8s-wizard
 ```
 The front-end is built, then served by the back-end on port 80.
-You can specify a different port number in the docker run command, but port 8080 is reserved for development.
+You can specify a different port number in the `docker run` command, but port 8080 is reserved for development.
 
 By default, there is only one worker in production. If you need to change this, create a `.env` file at the root of the project (next to Dockerfile) with the following content:
 ```env

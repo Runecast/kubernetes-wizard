@@ -55,7 +55,11 @@
             :data-bs-parent="`#accordion-${getDisplayIdFromPath(key)}`"
           >
             <div class="accordion-body">
-              <div v-if="parameterDescriptions[key]" v-html="parameterDescriptions[key]"></div>
+              <div
+                v-if="parameterDescriptions[key] && parameterDescriptions[key] !== subDescription(subParameterData(subParameterDetails[key]['reference'])['description'])"
+                v-html="parameterDescriptions[key]"
+              ></div>
+
               <DataObject
                 v-if="subParameterDetails[key]['reference'] && (!subParameterDetails[key]['select_one']  || !subParameterDetails[key]['select_one'].includes(key))"
                 :parameter-data="subParameterData(subParameterDetails[key]['reference'])"
@@ -256,6 +260,11 @@ export default {
         data = data[key]
       })
       return data
+    },
+    subDescription(subParameterDetails, key) {
+      let rawDescription = subParameterDetails || '';
+      console.log(rawDescription)
+      return rawDescription.replaceAll(/(https?:\/\/[\w\-_./#?]+)/g, '<a href="$1" target="_blank">$1</a>')
     },
     removeAccordionItem(key, itemIndex) {
       this.indices[key].splice(this.indices[key].indexOf(itemIndex), 1);
