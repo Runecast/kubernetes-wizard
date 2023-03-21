@@ -30,7 +30,7 @@ This must be the first step after choosing a resource, as the button will be dis
 The project can be run using Docker with the command (use `sudo` if not in the Docker user group on Linux):
 ```bash
 docker build -t k8s-wizard .
-docker run -p 80:8000 -ti k8s-wizard
+docker run -d -p 80:8000 -ti k8s-wizard
 ```
 The front-end is built, then served by the back-end on port 80.
 You can specify a different port number in the `docker run` command, but port 8080 is reserved for development.
@@ -44,7 +44,7 @@ If you set this value to 0, the maximum number of workers will be used.
 
 To run the container with the new configuration, use:
 ```bash
-docker run --env-file=.env -p 80:8000 -ti k8s-wizard
+docker run --env-file=.env -d -p 80:8000 -ti k8s-wizard
 ```
 
 ### Set up for development

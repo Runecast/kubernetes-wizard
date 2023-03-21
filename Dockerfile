@@ -33,7 +33,7 @@ COPY --from=build-stage /opt/k8s-wizard/frontend/dist/ /home/gunicorn/k8s-wizard
 
 ENV BUILD="prod"
 ENV PYTHONUNBUFFERED="1"
-ENV WORKERS="${WORKERS:-1}"
+ENV WORKERS="1"
 EXPOSE 8000
 
 COPY data/ /home/gunicorn/k8s-wizard/data/
