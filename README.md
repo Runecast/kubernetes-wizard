@@ -94,4 +94,4 @@ Each one of them must have the following keys:
 The references are the ones found in the JSON files.
 The attribute can be `options` (possible values that are suggested), `required` (boolean), `predefined_value` (for each resource, this is the value automatically set for `apiVersion` and `kind`), `default` (used value if nothing is provided, usually appears as placeholder), `select_one` (when one object only must be filled).
 
-To make it easier to write these modifications, an endpoint `/modify` has been created (available only in development mode) to easily find references and ensure the chosen values are consistent.
+In development mode, you can visit http://localhost:8080/modify to easily find the parameters' references and ensure the chosen values are consistent.
