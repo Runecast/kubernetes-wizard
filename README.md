@@ -1,12 +1,21 @@
-# K8S Wizard
+# K8s Wizard
 
 ---
 
-This application helps to create Kubernetes YAML manifests by automatically generating YAML from user input.
+This application facilitates the creation of Kubernetes YAML manifests by automatically generating YAML code based on user input provided through a form.
+
+- [Usage](#usage)
+- [For developers](#for-developers)
+  - [Set up for production](#set-up-for-production)
+  - [Set up for development](#set-up-for-development)
+  - [Data modifications](#data-modifications)
 
 ## Usage
 
-In the application, you can choose your Kubernetes version and select a resource.
+In the application, you can choose your Kubernetes version and select a resource. You can easily search for resources by entering (even partial) resource type. 
+
+![Screen 1 - Selecting resources](readme-screen1.png "Selecting resources")
+
 A form is created on the left panel, and the YAML will be generated on the right panel.
 All data objects are collapsed by default but can be expanded to access their parameters.
 
@@ -17,38 +26,45 @@ You no longer need to go back and forth reading the API reference, the form cont
 - Parameter type
 - Required
 
-When filling the form, the YAML is automatically generated.
+![Screen 2 - Editing deployment manifest](readme-screen2.png "Editing deployment manifest")
+
+When filling out the form, the YAML is automatically generated.
 When you're done, you can click on the "Copy" button and paste the results in your YAML manifest.
 
 If you already have a working YAML manifest and want to modify it, you can import it in the application using the "Import" button.
-This must be the first step after choosing a resource, since this button will be disabled as soon as a field of the form if filled (to avoid silently overriding your inputs).
+This must be the first step after choosing a resource, as the button will be disabled as soon as a field of the form is filled out (to avoid silently overriding your inputs).
+
+![Screen 3 - Importing manifest](readme-screen3.png "Importing manifest")
 
 ## For developers
 
-### Set up
+### Set up for production
 
 The project can be run using Docker with the command (use `sudo` if not in the Docker user group on Linux):
 ```bash
-docker-compose -f ./docker-compose-[profile].yaml up -d
+docker build -t k8s-wizard .
+docker run -d -p 80:8000 -ti k8s-wizard
 ```
-where `[profile]` can be:
-- `dev`: the front-end is deployed on port 7901 and the back-end on port 5000.
-- `prod`: the front-end is built, then served by the back-end on port 80.
+The front-end is built, then served by the back-end on port 80.
+You can specify a different port number in the `docker run` command, but port 8080 is reserved for development.
 
-To stop the application, run:
-```bash
-docker-compose -f ./docker-compose-[profile].yaml down
-```
-
-By default, there is only 1 worker in production and the port is 80. To change this behavior, create a `.env` file at the root of the project (next to `docker-compose-prod.yaml`) with the following content:
+By default, there is only one worker in production. If you need to change this, create a `.env` file at the root of the project (next to Dockerfile) with the following content:
 ```env
 WORKERS=[n_workers]
-PORT=[port]
 ```
-with `[n_workers]` and `[port]` integers.
-The port can't be 7901 or 8080 (these values is reserved for development).
+where `[n_workers]` is a positive integer.
+If you set this value to 0, the maximum number of workers will be used.
 
-If you'd rather use Python and Node.js instead of Docker Compose to run the app locally, the back-end can be started using the script with:
+To run the container with the new configuration, use:
+```bash
+docker run --env-file=.env -d -p 80:8000 -ti k8s-wizard
+```
+
+### Set up for development
+
+For development, you'll need Python 3.10+ and Node.js 16+.
+
+The back-end can be started using the following:
 ```bash
 cd backend
 pip install -r requirements.txt  # Only the first time
@@ -60,8 +76,7 @@ cd frontend
 npm install  # Only the first time
 npm run serve
 ```
-
-The app can then be found on port 8080.
+Once both the back-end and front-end are running, you can access the app by visiting http://localhost:8080 in your web browser.
 
 ### Data modifications
 
@@ -79,4 +94,4 @@ Each one of them must have the following keys:
 The references are the ones found in the JSON files.
 The attribute can be `options` (possible values that are suggested), `required` (boolean), `predefined_value` (for each resource, this is the value automatically set for `apiVersion` and `kind`), `default` (used value if nothing is provided, usually appears as placeholder), `select_one` (when one object only must be filled).
 
-To make it easier to write these modifications, an endpoint `/modify` has been created (only in development mode) to easily find references and ensure the chosen values are consistent.
+In development mode, you can visit http://localhost:8080/modify to easily find the parameters' references and ensure the chosen values are consistent.

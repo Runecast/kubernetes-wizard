@@ -3,31 +3,39 @@ FROM node:lts-alpine AS build-stage
 WORKDIR /opt/k8s-wizard/frontend
 ENV PATH frontend/node_modules/.bin:$PATH
 
-RUN npm install @vue/cli@v5.0.8 -g
-COPY frontend/package*.json ./
-RUN npm install
 COPY frontend/ .
 
-RUN npm run build
+RUN npm install; \
+    npm install @vue/cli@v5.0.8 -g; \
+    npm run build
 
+FROM python:3.10-alpine AS backend
 
-FROM python:3.9-buster AS prod-backend
+ENV PATH=$PATH:/home/gunicorn/.local/bin
+ENV PYTHONPATH $PYTHONPATH:/home/gunicorn/k8s-wizard/backend
 
-ENV PATH="${PATH}:/home/gunicorn/.local/bin"
-ENV PYTHONPATH "${PYTHONPATH}:/home/gunicorn/k8s-wizard/"
+WORKDIR /home/gunicorn/k8s-wizard/backend
 
-RUN groupadd -g 1000 gunicorn  \
- && useradd -u 1000 -g 1000 --create-home --shell /bin/bash gunicorn
-WORKDIR /home/gunicorn/k8s-wizard/backend/
-COPY start.sh ..
-RUN chown -R gunicorn /home/gunicorn/k8s-wizard/backend \
- && chmod +x /home/gunicorn/k8s-wizard/start.sh
+COPY start.sh /home/gunicorn/k8s-wizard/
+COPY backend/requirements.txt .
+
+RUN addgroup -S gunicorn; \
+    adduser -S gunicorn -G gunicorn; \
+    chown -R gunicorn /home/gunicorn/k8s-wizard/backend; \
+    chmod +x /home/gunicorn/k8s-wizard/start.sh; \
+    pip install --upgrade pip; \
+    pip install --no-cache-dir -r requirements.txt
 
 USER gunicorn
 
-COPY backend/requirements.txt .
-RUN pip install --upgrade pip \
- && pip install -r requirements.txt
-
-COPY --from=build-stage /opt/k8s-wizard/frontend/ /home/gunicorn/k8s-wizard/frontend/
 COPY backend/ .
+COPY --from=build-stage /opt/k8s-wizard/frontend/dist/ /home/gunicorn/k8s-wizard/frontend/dist/
+
+ENV BUILD="prod"
+ENV PYTHONUNBUFFERED="1"
+ENV WORKERS="1"
+EXPOSE 8000
+
+COPY data/ /home/gunicorn/k8s-wizard/data/
+WORKDIR /home/gunicorn/k8s-wizard
+CMD [ "/home/gunicorn/k8s-wizard/start.sh" ]

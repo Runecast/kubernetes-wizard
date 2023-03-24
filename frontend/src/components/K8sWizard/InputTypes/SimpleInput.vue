@@ -12,6 +12,7 @@
     class="form-control"
     data-bs-toggle="popover"
     data-bs-trigger="focus"
+    :data-type="parameterData.type"
   />
 </div>
 </template>
