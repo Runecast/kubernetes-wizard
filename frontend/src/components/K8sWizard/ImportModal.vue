@@ -12,6 +12,7 @@
           <textarea
             class="form-control"
             id="import-textarea"
+            spellcheck="false"
             rows="20"
             ref="yamlInput"
           ></textarea>
