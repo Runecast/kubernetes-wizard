@@ -38,8 +38,10 @@ class ActionConfig(BaseModel):
 
 
 class VersionsConfig(BaseModel):
-    latest: str = 'v1-28'
+    latest: str = 'v1-30'
     old: list[str] = [
+        'v1-29',
+        'v1-28',
         'v1-27',
         'v1-26',
         'v1-25',
